@@ -1,0 +1,62 @@
+# Pacientes da Clínica Veterinária Patinhas
+# Formato: microchip;nome;especie;mania
+# Microchip com 8 dígitos e único. Nomes repetem
+
+# --- Turminha inicial ---
+60218841;Luna;gata;dorme em cima do teclado
+31057720;Thor;cão;late para o aspirador
+48812903;Pipoca;cão;pula quando ouve a palavra "passeio"
+22091187;Mel;gata;derruba copos da mesa, um por um
+70334512;Zeus;cão;tem medo do gato do vizinho
+51200468;Amora;gata;mia para a geladeira
+13870255;Luna;cachorra;rouba meias
+39021746;Bob;cão;come a ração do irmão
+84460013;Bob;gato;dorme 20 horas por dia
+27719384;Lola;cachorra;adora tomar banho
+65502291;Paçoca;gato;caça o ponteiro laser
+44183067;Frida;cachorra;usa laço e se acha
+90027758;Simba;gato;acha que é leão
+18345602;Nina;coelha;rói o fio do carregador
+76690431;Pandora;gata;abre portas sozinha
+33208179;Chico;papagaio;imita o toque do celular
+57741820;Thor;gato;tem nome de cão, mas é gato
+81196354;Fred;hamster;corre a noite inteira na rodinha
+29573006;Luna;calopsita;assobia quando alguém chega
+62015547;Toddy;cão;só come se for na mão
+
+# --- Novos pacientes inventados pelo grupo ---
+41736029;Luna;cachorra;uiva quando toca a música do Fantástico
+95081362;Luna;gata;se esconde dentro da máquina de lavar
+16602847;Thor;cão;tem medo de trovão (logo ele)
+72395104;Thor;jabuti;foge do quintal a 0,2 km/h
+38810576;Bob;cão;late para o próprio reflexo
+53927418;Bob;peixe;nada de costas quando está feliz
+24468195;Mel;cachorra;come abelha e se arrepende
+87154630;Mel;gata;só bebe água da torneira do banheiro
+60917283;Mel;coelha;cava buracos no sofá
+11593704;Pipoca;hamster;guarda sementes na bochecha para o inverno
+69342851;Pipoca;gata;pula de susto com pepino
+45078916;Amora;cachorra;deita de barriga para cima pedindo carinho
+82631047;Zeus;gato;derruba o vaso e olha nos olhos do dono
+36259780;Nina;cachorra;rouba o controle remoto
+77904125;Nina;gata;dorme dentro de caixas de sapato
+20785369;Paçoca;cão;abana o rabo até derrubar a mesa de centro
+58406193;Pacoca;porquinho-da-índia;assobia quando ouve o saco de alface
+93617402;Lola;gata;caça moscas imaginárias
+14920538;Simba;cão;tem juba de tanto pelo
+67248015;Chico;cão;só dorme de cobertor
+30571864;Frida;calopsita;canta o hino do time do dono
+89315276;Fred;cão;rouba pão francês da padaria
+47862091;Toddy;gato;bebe leite achocolatado escondido
+25039648;Pandora;cachorra;abre o saco de ração com os dentes
+74186320;Bidu;cão;persegue o carteiro todo dia às 10
+12764953;Biscoito;cão;finge que mancou para ganhar petisco
+56390817;Cacau;gata;senta no notebook durante a aula online
+98452031;Floquinho;coelho;dá pulinhos quando está feliz
+34107689;Dengo;gato;mia em dó maior
+80619254;Café;cão;acorda todo mundo às 5 da manhã
+
+# pets do grupo
+47205913;Cacau;cachorra;late para pássaros
+# (cada integrante coloca aqui os próprios pets, no mesmo formato, com microchip de 8 dígitos ainda não usado)
+# exemplo: 12345678;NomeDoPet;especie;mania engraçada
