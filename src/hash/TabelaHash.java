@@ -90,7 +90,7 @@ public class TabelaHash {
     public int baldesVazios() {
         int vazios = 0;
         for (int i = 0; i < m; i++) {
-            if (baldes[i].estaVazia()) {
+            if (baldes[i].estaVazia()) { // usa metodo da classe lista encadeada
                 vazios++;
             }
         }
@@ -101,8 +101,8 @@ public class TabelaHash {
     public int maiorLista() {
         int maior = 0;
         for (int i = 0; i < m; i++) {
-            if (baldes[i].tamanho() > maior) {
-                maior = baldes[i].tamanho();
+            if (baldes[i].tamanho() > maior) { // usa metodo da classe lista encadeada
+                maior = baldes[i].tamanho(); // usa metodo da classe lista encadeada
             }
         }
         return maior;
@@ -110,12 +110,22 @@ public class TabelaHash {
 
     /**
      * >>> CÁLCULO DAS COLISÕES
+     * A tabela tem M gavetas e a função hash diz em qual gaveta cada nome vai.
+     * Colisão é quando dois nomes diferentes recebem a mesma gaveta.
+     * Ela é inevitável, por dois motivos:
+     *
+     * Há mais pets do que gavetas: 51 pets em 17 gavetas.
+     * Alguma gaveta vai ter mais de um, como pôr 51 cartas em 17 envelopes.
+     *
+     * A função hash “aperta” muitos nomes em poucos números: LUNA dá 304 e PACOCA dá 423, mas os dois têm resto 15 na divisão por 17.
+     * Nomes diferentes, mesma gaveta.
+     *
      * Num balde com k pets, o primeiro "chegou sem colidir" e os outros k - 1 colidiram.
      * Somando (k - 1) de cada balde ocupado: colisões = quantidade - baldes ocupados.
      */
     public int getColisoes() {
-        int ocupados = m - baldesVazios();
-        return quantidade - ocupados;
+        int ocupados = m - baldesVazios(); // baldes ocupados = total de baldes (m) - baldes vazios
+        return quantidade - ocupados; // colisões = pets - baldes ocupados (inclui nomes repetidos, como as Lunas)
     }
 
     /**
@@ -127,12 +137,12 @@ public class TabelaHash {
     public int getColisoesReais() {
         int total = 0;
         for (int i = 0; i < m; i++) {
-            int distintos = baldes[i].contarChavesDistintas();
+            int distintos = baldes[i].contarChavesDistintas(); // usa metodo da classe lista encadeada para verificar quantas chaves são diferentes
             if (distintos > 1) {
-                total = total + (distintos - 1);
+                total = total + (distintos - 1); // calcula colisoes reais com base nas chaves distintas
             }
         }
-        return total;
+        return total; // se nenhuma gaveta tiver 2 ou mais nomes diferentes, o total é 0
     }
 
     /** Quantos pets estão no fichário agora. */
@@ -167,42 +177,52 @@ public class TabelaHash {
      * Mostra os baldes onde há nomes DIFERENTES juntos (exemplos de colisão real).
      * Para cada balde, monta a lista de nomes sem repetir; se tiver mais de um nome, é colisão real.
      * Devolve quantos baldes desse tipo existem.
+     * Diferente do getColisoesReais() (que só calcula o número de colisões reais para as estatísticas),
+     * este método MOSTRA na tela os nomes de cada gaveta com colisão real e devolve quantas gavetas são.
      */
     public int imprimirColisoesReais() {
         int baldesComColisaoReal = 0;
-        for (int i = 0; i < m; i++) {
-            Pet[] pets = baldes[i].paraVetor();
+        for (int i = 0; i < m; i++) { // 1) passa por cada GAVETA
+            Pet[] pets = baldes[i].paraVetor(); // copia os pets da gaveta para um vetor usando metodo da classe lista encadeada
             String nomes = "";
             int nomesDiferentes = 0;
-            for (int a = 0; a < pets.length; a++) {
+            for (int a = 0; a < pets.length; a++) { // 2) passa por cada PET da gaveta
                 // o nome já apareceu antes neste balde? se sim, não conta de novo
-                boolean jaVisto = false;
-                for (int b = 0; b < a; b++) {
+                boolean jaVisto = false; // a bandeira começa abaixada para cada pet
+                for (int b = 0; b < a; b++) { // 3) olha os pets ANTES do pet "a"
                     if (pets[b].getChave().equals(pets[a].getChave())) {
-                        jaVisto = true;
+                        jaVisto = true; // laço b: se achar nome igual antes, jaVisto = true
                     }
                 }
-                if (!jaVisto) {
-                    nomes = nomesDiferentes == 0 ? pets[a].getChave() : nomes + ", " + pets[a].getChave();
+                if (!jaVisto) { // nome apareceu pela 1 vez nesta gaveta
+                    if (nomesDiferentes == 0) {
+                        nomes = pets[a].getChave();                  // 1 nome: só o nome → "PACOCA"
+                    } else {
+                        nomes = nomes + ", " + pets[a].getChave();   // próximos: vírgula + nome → "PACOCA, LUNA"
+                    }
                     nomesDiferentes++;
                 }
             }
-            if (nomesDiferentes > 1) {
-                System.out.println(String.format("    [%02d] %s", i, nomes));
-                baldesComColisaoReal++;
+            if (nomesDiferentes > 1) { // 2 ou mais nomes = colisão real
+                System.out.println(String.format("    [%02d] %s", i, nomes)); // imprime "[15] PACOCA, LUNA"
+                baldesComColisaoReal++; // conta essa gaveta
             }
         }
         return baldesComColisaoReal;
     }
 
-    /** Copia todos os pets da tabela para um único vetor (usado pela ordenação). */
+    /** Copia todos os pets da tabela para um único vetor (usado pela ordenação).
+     * O vetor sai na ordem das gavetas, que não é a ordem do arquivo nem a do microchip. Por isso o modo passo a passo usa a ordem do arquivo, e a ordenação é quem arruma por microchip.
+     * Ele copia referências e não duplica pets. Os mesmos objetos Pet ficam na tabela e no vetor, e ordenar o vetor não mexe nas gavetas.
+     */
     public Pet[] paraVetor() {
-        Pet[] todos = new Pet[quantidade];
-        int posicao = 0;
-        for (int i = 0; i < m; i++) {
-            Pet[] doBalde = baldes[i].paraVetor();
-            for (int j = 0; j < doBalde.length; j++) {
-                todos[posicao] = doBalde[j];
+        Pet[] todos = new Pet[quantidade];   // vetor do tamanho exato: quantos pets há na tabela
+        int posicao = 0;                     // próxima posição livre em "todos"
+
+        for (int i = 0; i < m; i++) {                    // para cada gaveta
+            Pet[] doBalde = baldes[i].paraVetor();       // pega os pets dela (vetor vazio se a gaveta está vazia)
+            for (int j = 0; j < doBalde.length; j++) {   // para cada pet dessa gaveta
+                todos[posicao] = doBalde[j];             // coloca na próxima posição livre
                 posicao++;
             }
         }
