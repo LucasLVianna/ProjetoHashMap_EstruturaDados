@@ -30,19 +30,19 @@ public class TabelaHash {
 
     /** Insere o pet no balde indicado pela função hash (no início da lista desse balde). */
     public void inserir(Pet p) {
-        int indice = funcao.calcular(p.getChave(), m);
-        baldes[indice].inserir(p);
-        quantidade++;
+        int indice = funcao.calcular(p.getChave(), m); // recebe o indice pela soma ou conta polinomial das funções de algoritmo
+        baldes[indice].inserir(p); // utiliza o metodo inserir da classe lista encadeada
+        quantidade++; // aumenta a quantidade de pet na tabela hash
     }
 
     /** Índice do balde (gaveta) onde fica esse nome. */
     public int indiceDoBalde(String nome) {
-        return funcao.calcular(Normalizador.normalizar(nome), m);
+        return funcao.calcular(Normalizador.normalizar(nome), m); // procura o indice da gaveta usando o metodo das funções de algoritmo com base na chave normalizada
     }
 
     /** Quantos pets há no balde de índice informado (0 = balde vazio). */
     public int tamanhoDoBalde(int indice) {
-        return baldes[indice].tamanho();
+        return baldes[indice].tamanho(); // utiliza o metodo da classe lista encadeada para verificar a gaveta
     }
 
     /**
@@ -50,20 +50,22 @@ public class TabelaHash {
      * calcula o índice do nome e procura dentro daquela lista.
      */
     public Pet[] buscarPorNome(String nome) {
-        String chave = Normalizador.normalizar(nome);
-        int indice = funcao.calcular(chave, m);
-        return baldes[indice].buscarPorChave(chave);
+        String chave = Normalizador.normalizar(nome); // normaliza a chave
+        int indice = funcao.calcular(chave, m); // calcula e encontra o indice da gaveta pelo metodo das funções de algoritmo
+        return baldes[indice].buscarPorChave(chave); // retorna a lista de pets com essa chave (pode ter mais de uma Luna por exemplo, retorna todas as Lunas)
     }
 
     /**
      * Remove (dá alta) o pet com esse microchip.
      * Como a chave da tabela é o NOME, o microchip não diz em qual balde o pet está:
      * por isso é preciso percorrer todos os baldes.
+     * obs: melhoria futura: receber também o nome do pet. Com o nome, calculamos o balde
+     * e removemos só nele, sem percorrer a tabela inteira (o microchip sozinho não indica o balde), reduz operações.
      */
     public boolean removerPorMicrochip(int microchip) {
         for (int i = 0; i < m; i++) {
-            if (baldes[i].removerPorMicrochip(microchip)) {
-                quantidade--;
+            if (baldes[i].removerPorMicrochip(microchip)) { // usa o metodo da classe lista encadeada para remover o pet pelo chip, percorre todas as gavetas até achar aquele microchip
+                quantidade--; // diminui quantidade de pets
                 return true;
             }
         }
@@ -72,10 +74,10 @@ public class TabelaHash {
 
     /** Mostra o fichário balde por balde. Ex.: [03] LUNA(60218841) → LUNA(13870255) → null */
     public void exibir() {
-        System.out.println("Fichário: M = " + m + " | função: " + funcao.getNome());
+        System.out.println("Fichário: M = " + m + " | função: " + funcao.getNome()); // fala tambem o nome da função que está sendo utilizada
         for (int i = 0; i < m; i++) {
-            System.out.print(String.format("[%02d] ", i));
-            baldes[i].imprimir();
+            System.out.print(String.format("[%02d] ", i)); // formatação q adiciona 0 antes de digito unico
+            baldes[i].imprimir(); // usa função da lista encadeada para imprimir o balde
         }
     }
 

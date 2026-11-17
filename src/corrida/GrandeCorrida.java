@@ -7,13 +7,6 @@ import ordenacao.InsertionSort;
 import ordenacao.Ordenador;
 import ordenacao.QuickSort;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Locale;
-
 /**
  * A Grande Corrida: os três algoritmos ordenam as mesmas filas e comparamos tempo, comparações e trocas.
  *
@@ -178,35 +171,5 @@ public class GrandeCorrida implements Runnable {
         }
         System.out.println(cabecalho);
         System.out.println(separador);
-    }
-
-    /**
-     * Salva os resultados num CSV (para montar gráficos e tabelas do relatório).
-     * Usa ponto como separador decimal (Locale.ROOT), para planilhas lerem sem confusão.
-     * Cria a pasta (ex.: resultados/) se ela ainda não existir.
-     */
-    public void exportarCsv(String caminho) {
-        if (totalResultados == 0) {
-            System.out.println("A corrida ainda não foi executada: nada para exportar.");
-            return;
-        }
-        try {
-            Path arquivo = Path.of(caminho);
-            if (arquivo.getParent() != null) {
-                Files.createDirectories(arquivo.getParent());
-            }
-            try (PrintWriter escritor = new PrintWriter(Files.newBufferedWriter(arquivo, StandardCharsets.UTF_8))) {
-                escritor.println("algoritmo,situacao,n,tempo_ms,comparacoes,trocas,estourou_pilha");
-                for (int i = 0; i < totalResultados; i++) {
-                    ResultadoCorrida r = resultados[i];
-                    escritor.println(r.algoritmo + "," + r.situacao + "," + r.n + ","
-                            + String.format(Locale.ROOT, "%.4f", r.getTempoMs()) + ","
-                            + r.comparacoes + "," + r.trocas + "," + (r.estourou ? "sim" : "nao"));
-                }
-            }
-            System.out.println("Resultados salvos em " + caminho);
-        } catch (IOException e) {
-            System.out.println("Não consegui salvar o CSV: " + e.getMessage());
-        }
     }
 }

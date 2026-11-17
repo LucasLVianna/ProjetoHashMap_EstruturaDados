@@ -25,7 +25,6 @@ import java.util.Scanner;
 public class Menu {
 
     private static final int MAX_PASSO_A_PASSO = 10;   // modo passo a passo: no máximo 10 pets
-    private static final String CAMINHO_CSV = "resultados/corrida.csv";
 
     private final Scanner entrada = new Scanner(System.in);
     private TabelaHash tabela;
@@ -295,13 +294,12 @@ public class Menu {
 
     // ===================== opções 8 a 10: experimentos =====================
 
-    /** Opção 8: roda a Grande Corrida, mostra as tabelas e salva o CSV. */
+    /** Opção 8: roda a Grande Corrida e mostra no console as tabelas de tempo e de comparações/trocas. */
     private void grandeCorrida() {
         System.out.println("A corrida usa pacientes gerados (50, 1.000 e 10.000) e leva alguns segundos...");
         GrandeCorrida corrida = new GrandeCorrida();
         corrida.executar();
         corrida.imprimirTabelas();
-        corrida.exportarCsv(CAMINHO_CSV);
     }
 
     /** Opção 9: compara M = 13, 17, 37 × duas funções; opcionalmente roda o teste de carga. */

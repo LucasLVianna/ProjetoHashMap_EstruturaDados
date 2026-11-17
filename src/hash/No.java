@@ -11,7 +11,7 @@ public class No {
     Pet pet;        // a ficha guardada neste elo
     No proximo;     // o próximo elo (ou null se este for o último)
 
-    /** Cria um elo com o pet, ainda sem próximo (null). */
+    /** Cria um elo com o pet, ainda sem próximo (null) */
     public No(Pet pet) {
         this.pet = pet;
         this.proximo = null;

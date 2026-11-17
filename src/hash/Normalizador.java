@@ -9,14 +9,14 @@ import java.text.Normalizer;
  */
 public class Normalizador {
 
-    /** Remove acentos, tira espaços das pontas e passa para maiúsculas. Ex.: "Paçoca" → "PACOCA". */
+    /** Remove acentos, tira espaços das pontas e passa para maiúsculas. Ex: "Paçoca" → "PACOCA". */
     public static String normalizar(String nome) {
         if (nome == null) {
             return "";
         }
-        // NFD separa a letra do acento: "ç" vira "c" + "¸" (marca separada)
+        // NFD separa a letra do acento: ç vira c + cedilha (marca separada)
         String decomposto = Normalizer.normalize(nome, Normalizer.Form.NFD);
-        // \p{M} = qualquer marca de acentuação; trocamos todas por nada
+        // \p{M} = qualquer marca de acentuação trocamos por nada
         String semAcento = decomposto.replaceAll("\\p{M}", "");
         return semAcento.trim().toUpperCase();
     }

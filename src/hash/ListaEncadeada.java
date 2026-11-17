@@ -3,8 +3,7 @@ package hash;
 import modelo.Pet;
 
 /**
- * Lista encadeada feita por nós (sem LinkedList do Java).
- * Cada balde da tabela hash é uma dessas listas: é ali que ficam os pets que caíram no mesmo índice.
+ * Cada balde da tabela hash é uma dessas listas: é ali que ficam os pets que caíram no mesmo índice
  */
 public class ListaEncadeada {
 
@@ -23,33 +22,33 @@ public class ListaEncadeada {
     }
 
     /**
-     * Devolve TODOS os pets com a chave informada (ex.: todas as Lunas).
+     * Devolve TODOS os pets com a chave informada (ex: todas as Lunas).
      * Primeiro conta quantos são, depois cria o vetor do tamanho certo e preenche.
      * Se não houver nenhum, devolve um vetor vazio (nunca null).
      */
     public Pet[] buscarPorChave(String chave) {
         // 1ª volta: contar
-        int quantos = 0;
+        int quantidade = 0;
         No atual = inicio;
         while (atual != null) {
-            if (atual.pet.getChave().equals(chave)) {
-                quantos++;
+            if (atual.pet.getChave().equals(chave)) { // busca e compara por nome
+                quantidade++;
             }
             atual = atual.proximo;
         }
 
         // 2ª volta: preencher
-        Pet[] encontrados = new Pet[quantos];
+        Pet[] encontrados = new Pet[quantidade]; // cria o array chamado: "encontrados" com o tamanho "quantidade", encontrado na primeira volta
         int posicao = 0;
         atual = inicio;
         while (atual != null) {
             if (atual.pet.getChave().equals(chave)) {
-                encontrados[posicao] = atual.pet;
+                encontrados[posicao] = atual.pet; //armazena o pet com mesma chave no array
                 posicao++;
             }
             atual = atual.proximo;
         }
-        return encontrados;
+        return encontrados; // retorna lista de pets com aquela chave / nome
     }
 
     /**
@@ -64,13 +63,13 @@ public class ListaEncadeada {
                 if (anterior == null) {
                     inicio = atual.proximo;            // era o primeiro: o início anda um
                 } else {
-                    anterior.proximo = atual.proximo;  // estava no meio/fim: o anterior pula ele
+                    anterior.proximo = atual.proximo;  // encontrou o microchip, e estava no meio/fim: o anterior pula ele e recebe o proximo
                 }
                 tamanho--;
                 return true;
             }
-            anterior = atual;
-            atual = atual.proximo;
+            anterior = atual; // anda um
+            atual = atual.proximo; // anda um
         }
         return false;
     }
@@ -87,46 +86,46 @@ public class ListaEncadeada {
 
     /**
      * True se já existe na lista algum pet com chave DIFERENTE da informada
-     * (ex.: perguntar por LUNA num balde que tem AMORA → true).
+     * (ex.: perguntar por LUNA num balde que tem AMORA -> true).
      */
     public boolean possuiChaveDiferente(String chave) {
         No atual = inicio;
         while (atual != null) {
             if (!atual.pet.getChave().equals(chave)) {
-                return true;
+                return true; // se encontrou uma chave diferente da procurada na mesma lista
             }
             atual = atual.proximo;
         }
-        return false;
+        return false; // se não encontrou
     }
 
     /**
      * Conta quantos nomes (chaves) DIFERENTES existem na lista.
      * Para cada nó, olha se a mesma chave já apareceu num nó anterior; se não, é um nome novo.
-     * Ex.: LUNA → LUNA → AMORA → null tem 2 nomes distintos.
+     * Ex.: LUNA -> LUNA -> AMORA -> null tem 2 nomes distintos.
      */
     public int contarChavesDistintas() {
         int distintas = 0;
         No atual = inicio;
-        while (atual != null) {
+        while (atual != null) { // nó que verifica todo o array
             // procura a mesma chave entre os nós que vêm ANTES do atual
             boolean jaApareceu = false;
             No anterior = inicio;
-            while (anterior != atual) {
-                if (anterior.pet.getChave().equals(atual.pet.getChave())) {
-                    jaApareceu = true;
+            while (anterior != atual) { // nó que compara o pet atual com os anteriores
+                if (anterior.pet.getChave().equals(atual.pet.getChave())) { // algum dos pets anteriores é igual ao pet atual?
+                    jaApareceu = true; // se sim, ele já apareceu e não conta como distinto, se não apareceu ainda, ele é uma nova chave
                 }
-                anterior = anterior.proximo;
+                anterior = anterior.proximo; // anda uma casa
             }
-            if (!jaApareceu) {
+            if (!jaApareceu) { // se jaApareceu não virou true, tem uma chave distinta
                 distintas++;
             }
-            atual = atual.proximo;
+            atual = atual.proximo; // anda uma casa
         }
-        return distintas;
+        return distintas; // retorna quantidade de chaves diferentes
     }
 
-    /** Imprime a lista. Ex.: LUNA(60218841) → THOR(31057720) → null */
+    /** Imprime a lista. Ex: LUNA(60218841) → THOR(31057720) → null */
     public void imprimir() {
         No atual = inicio;
         while (atual != null) {
@@ -137,8 +136,9 @@ public class ListaEncadeada {
     }
 
     /** Copia os pets da lista para um vetor (na ordem da lista). */
+    // junta todos os pets da gaveta em um array
     public Pet[] paraVetor() {
-        Pet[] vetor = new Pet[tamanho];
+        Pet[] vetor = new Pet[tamanho]; // cria um vetor com base no tamanho da lista
         int posicao = 0;
         No atual = inicio;
         while (atual != null) {
